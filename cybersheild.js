@@ -9,7 +9,6 @@ export function applyCyberShieldToAxios(axiosInstance) {
             if (error.response && (error.response.status === 403 || error.response.status === 429)) {
                 const data = error.response.data;
                 if (data && data.blocked && data.redirect) {
-                    window.history.replaceState({ cybershield_trap: true, redirect_url: data.redirect }, "");
                     window.location.assign(data.redirect);
                 }
             }
@@ -22,16 +21,7 @@ export function applyCyberShieldToAxios(axiosInstance) {
 (function initCyberShieldInterceptor() {
     if (typeof window === 'undefined' || !window.fetch) return;
 
-    if (window.history.state && window.history.state.cybershield_trap) {
-        window.location.replace(window.history.state.redirect_url);
-        return;
-    }
 
-    window.addEventListener("popstate", (event) => {
-        if (event.state && event.state.cybershield_trap) {
-            window.location.replace(event.state.redirect_url);
-        }
-    });
     // ------------------------------
 
     // Prevent multiple initializations
@@ -52,7 +42,6 @@ export function applyCyberShieldToAxios(axiosInstance) {
                 try {
                     const data = await clonedResponse.json();
                     if (data && data.blocked && data.redirect) {
-                        window.history.replaceState({ cybershield_trap: true, redirect_url: data.redirect }, "");
                         window.location.assign(data.redirect);
                     }
                 } catch (e) { }

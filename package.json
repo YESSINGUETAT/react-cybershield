@@ -2,7 +2,7 @@
   "name": "react-cybershield",
   "version": "1.0.0",
   "description": "React integration library for CyberShield WAF",
-  "main": "index.js",
+  "main": "cybersheild.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
